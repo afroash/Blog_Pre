@@ -1,32 +1,48 @@
 import React, { useState } from 'react';
-import Login from './components/login';
+import Login from './components/Login';
 import Posts from './components/Posts';
+import AddPost from './components/AddPost'; // Assume this component is correctly set up
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState('');
+  const [showLoginForm, setShowLoginForm] = useState(false); // New state to control the form display
 
   const handleLogin = (token) => {
-    localStorage.setItem('token', token);  // Save token to local storage
+    localStorage.setItem('token', token);
+    setToken(token);
     setIsLoggedIn(true);
+    setShowLoginForm(false);  // Hide login form upon successful login
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');  // Remove token from local storage
+    localStorage.removeItem('token');
+    setToken('');
     setIsLoggedIn(false);
+  };
+
+  const toggleLoginForm = () => {
+    setShowLoginForm(!showLoginForm);
+    
   };
 
   return (
     <div className="App">
-      <header>
-        {isLoggedIn ? (
-          <button onClick={handleLogout}>Logout</button>
-        ) : (
-          <button onClick={() => setIsLoggedIn(true)}>Login</button>  // Temporarily set true for navigation
+      <header style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+        {!isLoggedIn && (
+          <button onClick={toggleLoginForm}>Login</button>
+        )}
+        {isLoggedIn && (
+          <>
+            <button onClick={handleLogout}>Logout</button>
+            <button onClick={() => {/* navigate to add post */}}>Add Post</button>
+          </>
         )}
       </header>
       <main>
+        {showLoginForm && !isLoggedIn && <Login onLogin={handleLogin} />}
         <Posts />
-        {isLoggedIn && <Login onLogin={handleLogin} />}
+        {isLoggedIn && <AddPost token={token} />}
       </main>
     </div>
   );

@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.post {
+  border: 1px solid #ccc;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center content for better alignment */
+}
+
+.post, .login-form {
+  width: 80%;  /* Example width, adjust as necessary */
+  margin-top: 20px;
+}
+
+.login-form {
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+header button {
+  padding: 10px 20px;
+  cursor: pointer;
+}

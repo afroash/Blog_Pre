@@ -14,7 +14,7 @@ function Login({ onLogin }) {
     }
     try {
       const response = await axios.post('http://localhost:8000/user/login', { username, password });
-      onLogin(response.data.token);  // Assuming the token is returned on a successful login
+      onLogin(response.data.access_token);  // Assuming the token is returned on a successful login
       setError('');
     } catch (error) {
       setError('Failed to login');
@@ -24,7 +24,7 @@ function Login({ onLogin }) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='login-form'>
         <label>
           Username:
           <input
