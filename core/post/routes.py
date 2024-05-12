@@ -9,18 +9,25 @@ from .dependency import get_post_for_user
 
 post_router = APIRouter()
 
-@post_router.post("/posts")
+@post_router.post("/posts", response_model=CreateUpdatePost)
 def create_post(
     post_data: CreateUpdatePost, 
     db: Session = Depends(get_db),
-    user: User = Depends(get_current_user)):
-    post = Post(title=post_data.title, content=post_data.content, author_id=user.id)
+    user: User = Depends(get_current_user)
+    ):
+    post = Post(
+        title=post_data.title, 
+        content=post_data.content, 
+        author_id=user.id)
     db.add(post)
     db.commit()
-    return {
-        "data": post_data
+    db.refresh(post)
+    return post
 
-    }
+    #{
+    #    "data": post_data
+
+    #}///
 
 @post_router.get("/posts")
 def list_post(db: Session = Depends(get_db)):
