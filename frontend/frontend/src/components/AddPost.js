@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddPost({ token }) {
+    const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -20,6 +22,8 @@ function AddPost({ token }) {
         }
       });
       alert('Post added successfully');
+      navigate('/'); // Navigate back to the post list
+      //onUpdate(); // Optional: if you want to trigger a refresh without navigation
       setTitle('');  // Reset title state
       setContent('');  // Reset content state
     } catch (error) {
